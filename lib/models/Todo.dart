@@ -1,4 +1,4 @@
-enum Category { mySelf, sweetHome, work, relationShip }
+enum Category { mySelf, home, work, relationShip }
 
 class Todo {
   Todo({

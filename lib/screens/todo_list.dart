@@ -13,7 +13,7 @@ class TodoList extends StatefulWidget {
 class _TodoListState extends State<TodoList> {
   final List<Todo> _todoList = [];
 
-  void _submitTodo(String text) {
+  void _submitTodo(String text, Category category) {
     if (text.isEmpty) {
       showDialog(
           context: context,
@@ -52,7 +52,7 @@ class _TodoListState extends State<TodoList> {
         id: (_todoList.length + 1).toString(),
         isDone: false,
         text: text,
-        category: Category.mySelf,
+        category: category,
       );
 
       setState(() {
@@ -65,6 +65,7 @@ class _TodoListState extends State<TodoList> {
 
   void _showBottomSheet() {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (ctx) {
           return NewTodo(
@@ -101,16 +102,18 @@ class _TodoListState extends State<TodoList> {
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 24,
-          ),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ..._todoList.map((todo) => TodoItem(text: todo.text))
-              ]),
-        ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 24,
+            ),
+            child: ListView.builder(
+                itemCount: _todoList.length,
+                itemBuilder: (BuildContext ctx, int index) {
+                  return TodoItem(
+                    text: _todoList[index].text,
+                    category: _todoList[index].category,
+                  );
+                })),
       ),
     );
   }
