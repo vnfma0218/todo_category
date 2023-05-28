@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/Todo.dart';
+import 'package:todo_app/screens/todo_list_screen.dart';
 import 'package:todo_app/widgets/new_todo.dart';
-import 'package:todo_app/widgets/todo_item.dart';
 
-class TodoList extends StatefulWidget {
-  const TodoList({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<TodoList> createState() => _TodoListState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _TodoListState extends State<TodoList> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Todo> _todoList = [];
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void _submitTodo(String text, Category category) {
     if (text.isEmpty) {
@@ -101,19 +114,29 @@ class _TodoListState extends State<TodoList> {
           ],
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 24,
+        body: Column(
+          children: [
+            TabBar.secondary(
+              controller: _tabController,
+              tabs: const <Widget>[
+                Tab(text: 'Tasks'),
+                Tab(text: 'Boards'),
+              ],
             ),
-            child: ListView.builder(
-                itemCount: _todoList.length,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return TodoItem(
-                    text: _todoList[index].text,
-                    category: _todoList[index].category,
-                  );
-                })),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  TodoListScreen(todoList: _todoList),
+                  const Card(
+                    margin: EdgeInsets.all(16.0),
+                    child: Center(child: Text(' Specifications tab')),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

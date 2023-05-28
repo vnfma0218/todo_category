@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/todo_list.dart';
+import 'package:todo_app/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 12, 19, 79)),
         useMaterial3: true,
       ),
-      home: const TodoList(),
+      home: const HomeScreen(),
     );
   }
 }
