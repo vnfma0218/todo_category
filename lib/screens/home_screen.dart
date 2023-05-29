@@ -87,6 +87,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         });
   }
 
+  void _onChangeIsDone(
+    bool isDone,
+    String id,
+  ) {
+    final todoIdx = _todoList.indexWhere((element) => element.id == id);
+    final newTodo = Todo(
+      category: _todoList[todoIdx].category,
+      text: _todoList[todoIdx].text,
+      id: _todoList[todoIdx].id,
+      isDone: isDone,
+    );
+    setState(() {
+      _todoList[todoIdx] = newTodo;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -114,28 +130,51 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: Column(
-          children: [
-            TabBar.secondary(
-              controller: _tabController,
-              tabs: const <Widget>[
-                Tab(text: 'Tasks'),
-                Tab(text: 'Boards'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 24,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Good',
+                style: TextStyle(
+                  fontSize: 40,
+                ),
+              ),
+              const Text(
+                'Morning!',
+                style: TextStyle(
+                  fontSize: 40,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TabBar(
                 controller: _tabController,
-                children: <Widget>[
-                  TodoListScreen(todoList: _todoList),
-                  const Card(
-                    margin: EdgeInsets.all(16.0),
-                    child: Center(child: Text(' Specifications tab')),
-                  ),
+                tabs: const <Widget>[
+                  Tab(text: 'Tasks'),
+                  Tab(text: 'Boards'),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    TodoListScreen(
+                        todoList: _todoList, onChangeIsDone: _onChangeIsDone),
+                    const Card(
+                      margin: EdgeInsets.all(16.0),
+                      child: Center(child: Text(' Specifications tab')),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

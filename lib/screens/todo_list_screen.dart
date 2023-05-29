@@ -3,23 +3,23 @@ import 'package:todo_app/models/Todo.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
 class TodoListScreen extends StatelessWidget {
-  const TodoListScreen({super.key, required this.todoList});
+  const TodoListScreen(
+      {super.key, required this.todoList, required this.onChangeIsDone});
   final List<Todo> todoList;
+  final void Function(bool isDone, String id) onChangeIsDone;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 24,
-        ),
-        child: ListView.builder(
-            itemCount: todoList.length,
-            itemBuilder: (BuildContext ctx, int index) {
-              return TodoItem(
-                text: todoList[index].text,
-                category: todoList[index].category,
-              );
-            }));
+    return ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (BuildContext ctx, int index) {
+          return TodoItem(
+            text: todoList[index].text,
+            category: todoList[index].category,
+            id: todoList[index].id,
+            isDone: todoList[index].isDone,
+            onChangeIsDone: onChangeIsDone,
+          );
+        });
   }
 }

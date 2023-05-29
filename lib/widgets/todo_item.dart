@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/Todo.dart';
+import 'package:todo_app/widgets/todo_item_detail.dart';
 
 class TodoItem extends StatefulWidget {
-  const TodoItem({super.key, required this.text, required this.category});
+  const TodoItem({
+    super.key,
+    required this.text,
+    required this.category,
+    required this.id,
+    required this.isDone,
+    required this.onChangeIsDone,
+  });
+  final String id;
   final String text;
+  final bool isDone;
   final Category category;
+  final void Function(bool isDone, String id) onChangeIsDone;
 
   @override
   State<TodoItem> createState() => _TodoItemState();
@@ -14,52 +25,69 @@ class _TodoItemState extends State<TodoItem> {
   final _selectedMenu = 'test1';
   static const List<String> list = <String>['test1', 'test2'];
 
+  void _showDetailModal() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => TodoItemDetail(
+        text: widget.text,
+        category: widget.category,
+        id: widget.id,
+        isDone: widget.isDone,
+        onChangeIsDone: widget.onChangeIsDone,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                IconButton.outlined(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.add,
+    return InkWell(
+      onTap: _showDetailModal,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  IconButton.outlined(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.add,
+                    ),
                   ),
+                  const Spacer(),
+                  PopupMenuButton(
+                    itemBuilder: (ctx) {
+                      return [
+                        const PopupMenuItem(child: Text('text1')),
+                        const PopupMenuItem(child: Text('text2')),
+                      ];
+                    },
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              Text(
+                widget.category.name.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 11,
                 ),
-                const Spacer(),
-                PopupMenuButton(
-                  itemBuilder: (ctx) {
-                    return [
-                      const PopupMenuItem(child: Text('text1')),
-                      const PopupMenuItem(child: Text('text2')),
-                    ];
-                  },
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-            Text(
-              widget.category.name.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 11,
               ),
-            ),
-            Text(
-              widget.text,
-              style: const TextStyle(
-                fontSize: 30,
+              Text(
+                widget.text,
+                style: const TextStyle(
+                  fontSize: 30,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
