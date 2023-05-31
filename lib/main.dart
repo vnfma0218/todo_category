@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Todo App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 12, 19, 79)),
+            seedColor: const Color.fromARGB(104, 82, 76, 186)),
         useMaterial3: true,
       ),
       home: const HomeScreen(),

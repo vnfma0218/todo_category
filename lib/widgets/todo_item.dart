@@ -9,10 +9,12 @@ class TodoItem extends StatefulWidget {
     required this.category,
     required this.id,
     required this.isDone,
+    required this.description,
     required this.onChangeIsDone,
   });
   final String id;
   final String text;
+  final String description;
   final bool isDone;
   final Category category;
   final void Function(bool isDone, String id) onChangeIsDone;
@@ -35,6 +37,7 @@ class _TodoItemState extends State<TodoItem> {
         id: widget.id,
         isDone: widget.isDone,
         onChangeIsDone: widget.onChangeIsDone,
+        description: widget.description,
       ),
     );
   }

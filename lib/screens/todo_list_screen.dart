@@ -10,16 +10,22 @@ class TodoListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: todoList.length,
-        itemBuilder: (BuildContext ctx, int index) {
-          return TodoItem(
-            text: todoList[index].text,
-            category: todoList[index].category,
-            id: todoList[index].id,
-            isDone: todoList[index].isDone,
-            onChangeIsDone: onChangeIsDone,
-          );
-        });
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+      ),
+      child: ListView.builder(
+          itemCount: todoList.length,
+          itemBuilder: (BuildContext ctx, int index) {
+            return TodoItem(
+              text: todoList[index].text,
+              category: todoList[index].category,
+              id: todoList[index].id,
+              isDone: todoList[index].isDone,
+              onChangeIsDone: onChangeIsDone,
+              description: todoList[index].description,
+            );
+          }),
+    );
   }
 }

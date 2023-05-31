@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _submitTodo(String text, Category category) {
+  void _submitTodo(String text, Category category, String description) {
     if (text.isEmpty) {
       showDialog(
           context: context,
@@ -67,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         isDone: false,
         text: text,
         category: category,
+        description: description,
       );
 
       setState(() {
@@ -97,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       category: _todoList[todoIdx].category,
       text: _todoList[todoIdx].text,
       id: _todoList[todoIdx].id,
+      description: _todoList[todoIdx].description,
       isDone: isDone,
     );
     setState(() {
@@ -111,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
           title: const Text(
             'My Todo App',
@@ -157,8 +160,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               TabBar(
                 controller: _tabController,
                 tabs: const <Widget>[
-                  Tab(text: 'Tasks'),
-                  Tab(text: 'Boards'),
+                  Tab(
+                    child: Text(
+                      'Tasks',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      'Boards',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
                 ],
               ),
               Expanded(

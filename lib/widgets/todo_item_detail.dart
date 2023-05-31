@@ -10,8 +10,10 @@ class TodoItemDetail extends StatefulWidget {
     required this.isDone,
     required this.category,
     required this.onChangeIsDone,
+    required this.description,
   });
   final String id;
+  final String description;
   final String text;
   final bool isDone;
   final Category category;
@@ -43,7 +45,7 @@ class _TodoItemDetailState extends State<TodoItemDetail> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
+      color: widget.category.color,
       padding: const EdgeInsets.symmetric(
         vertical: 60,
         horizontal: 30,
@@ -87,21 +89,21 @@ class _TodoItemDetailState extends State<TodoItemDetail> {
           ),
           Container(
             alignment: Alignment.center,
-            width: 90,
+            width: 110,
             padding: const EdgeInsets.symmetric(
               vertical: 7,
               horizontal: 20,
             ),
             decoration: BoxDecoration(
-                color: Colors.amber,
+                color: widget.category.color,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: Colors.black,
                   width: 1,
                 )),
-            child: const Text(
-              'Home',
-              style: TextStyle(
+            child: Text(
+              widget.category.title.toUpperCase(),
+              style: const TextStyle(
                 fontSize: 16,
               ),
             ),
@@ -119,14 +121,17 @@ class _TodoItemDetailState extends State<TodoItemDetail> {
           const SizedBox(
             height: 30,
           ),
-          const Text('Additional Description'),
+          Text(
+            'Additional Description',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            'Going to the gym in the morning and strech body',
-            style: TextStyle(
-              fontSize: 16,
+          Text(
+            widget.description,
+            style: const TextStyle(
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
