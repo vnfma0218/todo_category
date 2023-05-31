@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/Todo.dart';
+import 'package:todo_app/data/categoryData.dart';
+import 'package:todo_app/models/Category.dart';
 
 class NewTodo extends StatefulWidget {
   const NewTodo({required this.onSubmitTodo, super.key});
@@ -11,7 +12,7 @@ class NewTodo extends StatefulWidget {
 
 class _NewTodoState extends State<NewTodo> {
   final todoController = TextEditingController();
-  var _selectedCategory = Category.mySelf;
+  Category _selectedCategory = categoryData.first;
   @override
   void dispose() {
     todoController.dispose();
@@ -28,6 +29,9 @@ class _NewTodoState extends State<NewTodo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 60,
+          ),
           TextField(
             controller: todoController,
             decoration: const InputDecoration(
@@ -41,12 +45,12 @@ class _NewTodoState extends State<NewTodo> {
           ),
           DropdownButton(
             value: _selectedCategory,
-            items: Category.values
+            items: categoryData
                 .map(
                   (category) => DropdownMenuItem(
                       value: category,
                       child: Text(
-                        category.name.toUpperCase(),
+                        category.title.toUpperCase(),
                       )),
                 )
                 .toList(),

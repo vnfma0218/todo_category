@@ -67,7 +67,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
                   top: 20,
                   left: 92,
                   child: Text(
-                    widget.isDone ? 'Set Not done' : 'Set as Done!',
+                    widget.isDone ? 'COMPLETE!' : 'Set as Done',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

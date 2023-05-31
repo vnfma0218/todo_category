@@ -1,4 +1,4 @@
-enum Category { mySelf, home, work, relationShip }
+import 'package:todo_app/models/Category.dart';
 
 class Todo {
   Todo({

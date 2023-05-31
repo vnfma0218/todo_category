@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/Todo.dart';
+import 'package:todo_app/models/Category.dart';
 import 'package:todo_app/widgets/todo_item_detail.dart';
 
 class TodoItem extends StatefulWidget {
@@ -44,6 +44,7 @@ class _TodoItemState extends State<TodoItem> {
     return InkWell(
       onTap: _showDetailModal,
       child: Card(
+        color: widget.category.color,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -58,14 +59,15 @@ class _TodoItemState extends State<TodoItem> {
                     ),
                   ),
                   const Spacer(),
-                  PopupMenuButton(
-                    itemBuilder: (ctx) {
-                      return [
-                        const PopupMenuItem(child: Text('text1')),
-                        const PopupMenuItem(child: Text('text2')),
-                      ];
-                    },
-                  )
+                  if (widget.isDone) const Icon(Icons.check)
+                  // PopupMenuButton(
+                  //   itemBuilder: (ctx) {
+                  //     return [
+                  //       const PopupMenuItem(child: Text('text1')),
+                  //       const PopupMenuItem(child: Text('text2')),
+                  //     ];
+                  //   },
+                  // )
                 ],
               ),
               const SizedBox(
@@ -75,7 +77,7 @@ class _TodoItemState extends State<TodoItem> {
                 height: 7,
               ),
               Text(
-                widget.category.name.toUpperCase(),
+                widget.category.title.toUpperCase(),
                 style: const TextStyle(
                   fontSize: 11,
                 ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/Todo.dart';
+import 'package:todo_app/models/Category.dart';
 import 'package:todo_app/widgets/custom_switch.dart';
 
 class TodoItemDetail extends StatefulWidget {
-  TodoItemDetail({
+  const TodoItemDetail({
     super.key,
     required this.id,
     required this.text,
@@ -13,7 +13,7 @@ class TodoItemDetail extends StatefulWidget {
   });
   final String id;
   final String text;
-  bool isDone;
+  final bool isDone;
   final Category category;
   final void Function(bool isDone, String id) onChangeIsDone;
 
@@ -22,12 +22,20 @@ class TodoItemDetail extends StatefulWidget {
 }
 
 class _TodoItemDetailState extends State<TodoItemDetail> {
+  bool _isDone = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isDone = widget.isDone;
+  }
+
   void _onChangeIsDone(
     bool isDone,
     String id,
   ) {
     setState(() {
-      widget.isDone = isDone;
+      _isDone = isDone;
     });
     widget.onChangeIsDone(isDone, id);
   }
@@ -124,7 +132,7 @@ class _TodoItemDetailState extends State<TodoItemDetail> {
           ),
           const Spacer(),
           CustomSwitch(
-            isDone: widget.isDone,
+            isDone: _isDone,
             id: widget.id,
             onChangeIsDone: _onChangeIsDone,
           ),
