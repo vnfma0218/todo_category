@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/Category.dart';
-import 'package:todo_app/widgets/todo_item_detail.dart';
+import 'package:todo_app/widgets/todo/todo_item_detail.dart';
 
 class TodoItem extends StatefulWidget {
   const TodoItem({
@@ -72,9 +72,6 @@ class _TodoItemState extends State<TodoItem> {
                   //   },
                   // )
                 ],
-              ),
-              const SizedBox(
-                height: 7,
               ),
               const SizedBox(
                 height: 7,

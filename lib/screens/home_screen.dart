@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/data/categoryData.dart';
 import 'package:todo_app/models/Category.dart';
 import 'package:todo_app/models/Todo.dart';
-import 'package:todo_app/screens/todo_list_screen.dart';
-import 'package:todo_app/widgets/new_todo.dart';
+import 'package:todo_app/widgets/category/category_list.dart';
+import 'package:todo_app/widgets/todo/new_todo.dart';
+
+import '../widgets/todo/todo_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,6 +111,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    String totalTodo = '0';
+    if (_todoList.isNotEmpty) {
+      totalTodo = _todoList.length.toString();
+    }
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -159,17 +166,63 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               TabBar(
                 controller: _tabController,
-                tabs: const <Widget>[
+                tabs: <Widget>[
                   Tab(
-                    child: Text(
-                      'Tasks',
-                      style: TextStyle(color: Colors.black),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 40.0,
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(width: 1)),
+                          child: Center(
+                              child: Text(
+                            totalTodo,
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'Tasks',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Tab(
-                    child: Text(
-                      'Boards',
-                      style: TextStyle(color: Colors.black),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 40.0,
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(width: 1)),
+                          child: Center(
+                              child: Text(
+                            categoryData.length.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'Boards',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -178,12 +231,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: TabBarView(
                   controller: _tabController,
                   children: <Widget>[
-                    TodoListScreen(
+                    TodoList(
                         todoList: _todoList, onChangeIsDone: _onChangeIsDone),
-                    const Card(
-                      margin: EdgeInsets.all(16.0),
-                      child: Center(child: Text(' Specifications tab')),
-                    ),
+                    const CategoryList(),
                   ],
                 ),
               ),

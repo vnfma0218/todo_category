@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/Todo.dart';
-import 'package:todo_app/widgets/todo_item.dart';
+import 'package:todo_app/widgets/todo/todo_item.dart';
 
-class TodoListScreen extends StatelessWidget {
-  const TodoListScreen(
+class TodoList extends StatelessWidget {
+  const TodoList(
       {super.key, required this.todoList, required this.onChangeIsDone});
   final List<Todo> todoList;
   final void Function(bool isDone, String id) onChangeIsDone;
