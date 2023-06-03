@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/Category.dart';
+import 'package:todo_app/models/Todo.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem(
-      {super.key, required this.category, required this.activeTasks});
+      {super.key, required this.category, required this.todoList});
 
+  final List<Todo> todoList;
   final Category category;
-  final int activeTasks;
 
+  // // todo
+// todo list를 가져와서 현재 카테고리랑 매핑되어있는 todo item 갯수를 가져온다
   @override
   Widget build(BuildContext context) {
+    String activeTodoNums = '0';
+    activeTodoNums = todoList
+        .where(
+          (element) => element.category == category,
+        )
+        .toList()
+        .length
+        .toString();
     return Card(
       color: category.color,
       child: Padding(
@@ -39,9 +50,9 @@ class CategoryItem extends StatelessWidget {
             const SizedBox(
               height: 7,
             ),
-            const Text(
-              '5 active tasks',
-              style: TextStyle(
+            Text(
+              '$activeTodoNums active tasks',
+              style: const TextStyle(
                 fontSize: 11,
               ),
             ),

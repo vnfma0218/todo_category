@@ -233,7 +233,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   children: <Widget>[
                     TodoList(
                         todoList: _todoList, onChangeIsDone: _onChangeIsDone),
-                    const CategoryList(),
+                    CategoryList(
+                      todoList: _todoList,
+                    ),
                   ],
                 ),
               ),

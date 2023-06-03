@@ -5,5 +5,5 @@ var categoryData = [
   Category(title: 'mySelf', color: Colors.amber),
   Category(title: 'home', color: Colors.blue),
   Category(title: 'work', color: Colors.deepOrange),
-  Category(title: 'mySelf', color: Colors.purple),
+  Category(title: 'relationShip', color: Colors.purple),
 ];
