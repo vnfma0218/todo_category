@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  FilterStatus _currentFilter = FilterStatus.active;
   final List<Todo> _todoList = [];
   late final TabController _tabController;
 
@@ -149,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // main text
               const Text(
                 'Good',
                 style: TextStyle(
@@ -164,6 +166,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               const SizedBox(
                 height: 20,
               ),
+              // tasks, cateogry tabs
               TabBar(
                 controller: _tabController,
                 tabs: <Widget>[
@@ -227,12 +230,61 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              // active / done filter buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _currentFilter = FilterStatus.active;
+                      });
+                    },
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                          _currentFilter == FilterStatus.active
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          _currentFilter == FilterStatus.active
+                              ? Theme.of(context).primaryColorDark
+                              : Theme.of(context).primaryColor,
+                        )),
+                    child: const Text('Active'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _currentFilter = FilterStatus.done;
+                      });
+                    },
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            _currentFilter == FilterStatus.active
+                                ? Colors.white
+                                : Colors.black),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          _currentFilter == FilterStatus.active
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColorDark,
+                        )),
+                    child: const Text('Done'),
+                  ),
+                ],
+              ),
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
                   children: <Widget>[
                     TodoList(
-                        todoList: _todoList, onChangeIsDone: _onChangeIsDone),
+                      todoList: _todoList,
+                      onChangeIsDone: _onChangeIsDone,
+                      currentFilter: _currentFilter,
+                    ),
                     CategoryList(
                       todoList: _todoList,
                     ),

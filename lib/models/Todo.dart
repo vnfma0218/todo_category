@@ -1,5 +1,7 @@
 import 'package:todo_app/models/Category.dart';
 
+enum FilterStatus { active, done }
+
 class Todo {
   Todo({
     required this.category,
